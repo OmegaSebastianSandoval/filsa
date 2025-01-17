@@ -407,7 +407,7 @@ class Administracion_pedidosController extends Administracion_mainController
 		$data = $modelData->getList();
 		$array = array();
 		foreach ($data as $key => $value) {
-			$array[$value->id_departamento] = utf8_encode($value->departamento);
+			$array[$value->id_departamento] = mb_convert_encoding($value->departamento, 'UTF-8', 'ISO-8859-1');
 		}
 		return $array;
 	}
@@ -424,7 +424,7 @@ class Administracion_pedidosController extends Administracion_mainController
 		$data = $modelData->getList();
 		$array = array();
 		foreach ($data as $key => $value) {
-			$array[$value->id_municipio] =  utf8_encode($value->municipio);
+			$array[$value->id_municipio] =  mb_convert_encoding($value->municipio, 'UTF-8', 'ISO-8859-1');
 		}
 		return $array;
 	}
@@ -503,10 +503,10 @@ class Administracion_pedidosController extends Administracion_mainController
 	{
 		$filtros = " 1 = 1 ";
 		$pedido_estado = $this->_getSanitizedParam("pedido_estado");
-		if(!$pedido_estado) {
+		if (!$pedido_estado) {
 			$filtros = $filtros . " AND ( pedido_estado = '5' OR pedido_estado ='9' OR pedido_estado ='10') ";
 		}
-		
+
 		if (Session::getInstance()->get($this->namefilter) != "") {
 			$filters = (object)Session::getInstance()->get($this->namefilter);
 			if ($filters->pedido_documento != '') {
@@ -531,7 +531,7 @@ class Administracion_pedidosController extends Administracion_mainController
 			}
 			if ($filters->pedido_estado != '' && $filters->pedido_estado != 'Todos') {
 				$filtros = $filtros . " AND pedido_estado = " . $filters->pedido_estado;
-			}else if($filters->pedido_estado == 'Todos'){
+			} else if ($filters->pedido_estado == 'Todos') {
 				$filtros = $filtros . " AND  pedido_estado !='' ";
 			}
 		}

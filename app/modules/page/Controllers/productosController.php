@@ -180,7 +180,12 @@ class Page_productosController extends Page_mainController
   {
     $productoId = $this->_getSanitizedParam("producto");
     $categoriaId = $this->_getSanitizedParam("categoria");
-
+    $categoria = filter_var($_GET['categoria'], FILTER_VALIDATE_INT);
+    $producto = filter_var($_GET['producto'], FILTER_VALIDATE_INT);
+    
+    if (!$categoria || !$producto) {
+        die('Parámetros inválidos.');
+    }
     $productosModel = new Administracion_Model_DbTable_Productos();
     $categoriaModel = new Administracion_Model_DbTable_Tiendacategorias();
 

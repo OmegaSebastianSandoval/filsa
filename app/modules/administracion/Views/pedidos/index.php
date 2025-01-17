@@ -155,7 +155,7 @@
 							<td><?= $id ?></td>
 							<td><?= $content->pedido_fecha ?></td>
 							<td><?= $content->pedido_documento ?></td>
-							<td><?= $content->pedido_nombre ?></td>
+							<td><?= mb_convert_encoding($content->pedido_nombre, 'UTF-8', 'ISO-8859-1'); ?></td>
 							<td><?= $content->pedido_total >= 1 ? "$ " . number_format(ceil($content->pedido_total)) : $content->pedido_total ?></td>
 							<td><?= $this->list_pedido_estado[$content->pedido_estado] ?></td>
 							<td class="text-end">

@@ -1,45 +1,57 @@
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f 
-RewriteCond %{REQUEST_FILENAME} !-d 
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule ^(.*)$ index.php [L]
 
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# BEGIN cPanel-generated php ini directives, do not edit
-# Manual editing of this file may result in unexpected behavior.
-# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
-# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
-<IfModule php8_module>
-   php_flag display_errors Off
-   php_value max_execution_time 30
-   php_value max_input_time 60
-   php_value max_input_vars 1000
-   php_value memory_limit -1
-   php_value post_max_size 50M
-   php_value session.gc_maxlifetime 1440
-   php_value session.save_path "/var/cpanel/php/sessions/ea-php81"
-   php_value upload_max_filesize 100M
-   php_flag zlib.output_compression Off
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "DENY"
+    Header always set Content-Security-Policy "frame-ancestors 'none'"
+    
+    Header set Content-Security-Policy "\
+        default-src 'self'; \
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' \
+            https://s.ytimg.com \
+            https://unpkg.com \
+            https://cdn.jsdelivr.net \
+            https://cdnjs.cloudflare.com \
+            https://www.google.com \
+            https://maps.googleapis.com \
+            https://www.gstatic.com \
+            https://www.google.com/recaptcha/ \
+            https://rawgit.com \
+            https://www.youtube.com \
+            https://www.youtube-nocookie.com \
+            https://checkout.wompi.co; \
+        style-src 'self' 'unsafe-inline' \
+            https://fonts.googleapis.com \
+            https://unpkg.com \
+            https://cdn.jsdelivr.net \
+            https://cdnjs.cloudflare.com \
+            https://www.google.com \
+            https://maps.googleapis.com \
+            https://s.ytimg.com \
+            https://rawgit.com \
+            https://www.gstatic.com; \
+        img-src 'self' data: blob: https: http:; \
+        font-src 'self' data: https: \
+            https://fonts.gstatic.com \
+            https://cdnjs.cloudflare.com; \
+        connect-src 'self' https: data: blob:; \
+        frame-src 'self' \
+            https://www.google.com \
+            https://www.gstatic.com \
+            https://www.youtube.com \
+            https://www.youtube-nocookie.com \
+            https://player.vimeo.com; \
+        media-src 'self' blob: data:; \
+        object-src 'none'; \
+        base-uri 'self'; \
+        form-action 'self'; \
+        worker-src 'self' blob:; \
+        upgrade-insecure-requests \
+    "
 </IfModule>
-<IfModule lsapi_module>
-   php_flag display_errors Off
-   php_value max_execution_time 30
-   php_value max_input_time 60
-   php_value max_input_vars 1000
-   php_value memory_limit -1
-   php_value post_max_size 50M
-   php_value session.gc_maxlifetime 1440
-   php_value session.save_path "/var/cpanel/php/sessions/ea-php81"
-   php_value upload_max_filesize 100M
-   php_flag zlib.output_compression Off
-</IfModule>
-# END cPanel-generated php ini directives, do not edit
-
-# php -- BEGIN cPanel-generated handler, do not edit
-# Set the “ea-php81” package as the default “PHP” programming language.
-<IfModule mime_module>
-  AddHandler application/x-httpd-ea-php81 .php .php8 .phtml
-</IfModule>
-# php -- END cPanel-generated handler, do not edit
