@@ -47,7 +47,7 @@ class Administracion_Model_DbTable_Usuario extends Db_Table
 		$user_fecha_codigo_otp = $data['user_fecha_codigo_otp'];
 
 
-		echo $query = "INSERT INTO user(user_state, user_date, user_names, user_cedula, user_email, user_telefono, user_level, user_user, user_password, user_delete, user_current_user, user_code, user_empresa, user_addres, user_contacto, user_telefono_contacto, user_departamento, user_municipio,  user_nivel_cliente, user_codigo_otp, user_fecha_codigo_otp) VALUES ( '$user_state', '$user_date', '$user_names', '$user_cedula', '$user_email', '$user_telefono', '$user_level', '$user_user', '$user_password', '$user_delete', '$user_current_user', '$user_code', '$user_empresa', '$user_addres', '$user_contacto', '$user_telefono_contacto',  '$user_departamento', '$user_municipio', '$user_nivel_cliente', '$user_codigo_otp', '$user_fecha_codigo_otp')";
+		 $query = "INSERT INTO user(user_state, user_date, user_names, user_cedula, user_email, user_telefono, user_level, user_user, user_password, user_delete, user_current_user, user_code, user_empresa, user_addres, user_contacto, user_telefono_contacto, user_departamento, user_municipio,  user_nivel_cliente, user_codigo_otp, user_fecha_codigo_otp) VALUES ( '$user_state', '$user_date', '$user_names', '$user_cedula', '$user_email', '$user_telefono', '$user_level', '$user_user', '$user_password', '$user_delete', '$user_current_user', '$user_code', '$user_empresa', '$user_addres', '$user_contacto', '$user_telefono_contacto',  '$user_departamento', '$user_municipio', '$user_nivel_cliente', '$user_codigo_otp', '$user_fecha_codigo_otp')";
 		$res = $this->_conn->query($query);
 		return mysqli_insert_id($this->_conn->getConnection());
 

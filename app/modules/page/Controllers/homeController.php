@@ -33,18 +33,18 @@ class Page_homeController extends Page_mainController
     foreach ($direcciones  as $value) {
       $departamento = $departamentosModel->getById($value->direccion_departamento);
       $municipio = $municipiosModel->getById($value->direccion_ciudad);
-      $value->departamento_nombre =  mb_convert_encoding($departamento->departamento, 'ISO-8859-1', 'UTF-8');
-      $value->municipio_nombre = mb_convert_encoding($municipio->municipio, 'ISO-8859-1', 'UTF-8');
+      $value->departamento_nombre =  mb_convert_encoding($departamento->departamento,  'UTF-8', 'ISO-8859-1');
+      $value->municipio_nombre = mb_convert_encoding($municipio->municipio,  'UTF-8', 'ISO-8859-1');
     }
     $this->_view->direcciones = $direcciones;
     $departamentos = $departamentosModel->getList("", " departamento ASC");
     foreach ($departamentos as $value) {
-      $value->departamento = mb_convert_encoding($value->departamento, 'ISO-8859-1', 'UTF-8');
+      $value->departamento = mb_convert_encoding($value->departamento,  'UTF-8', 'ISO-8859-1');
     }
     $this->_view->departamentos = $departamentos;
     $municipios = $municipiosModel->getList("", "municipio ASC");
     foreach ($municipios as $value) {
-      $value->municipio = mb_convert_encoding($value->municipio, 'ISO-8859-1', 'UTF-8');
+      $value->municipio = mb_convert_encoding($value->municipio,  'UTF-8', 'ISO-8859-1');
     }
     $this->_view->municipios = $municipios;
 
@@ -188,7 +188,7 @@ class Page_homeController extends Page_mainController
     $data = $modelData->getList();
     $array = array();
     foreach ($data as $key => $value) {
-      $array[$value->id_departamento] =mb_convert_encoding($value->departamento, 'ISO-8859-1', 'UTF-8');
+      $array[$value->id_departamento] = mb_convert_encoding($value->departamento,  'UTF-8', 'ISO-8859-1');
     }
     return $array;
   }
@@ -205,7 +205,7 @@ class Page_homeController extends Page_mainController
     $data = $modelData->getList();
     $array = array();
     foreach ($data as $key => $value) {
-      $array[$value->id_municipio] = mb_convert_encoding($value->municipio, 'ISO-8859-1', 'UTF-8');
+      $array[$value->id_municipio] = mb_convert_encoding($value->municipio,  'UTF-8', 'ISO-8859-1');
     }
     return $array;
   }

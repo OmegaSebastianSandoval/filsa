@@ -668,7 +668,8 @@
     .container-profile .form-contact label select.input {
         height: 42px;
     }
-    .container-profile .form-contact input:disabled{
+
+    .container-profile .form-contact input:disabled {
         background-color: #d1d1d1;
     }
 </style>

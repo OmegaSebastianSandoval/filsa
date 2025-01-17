@@ -216,7 +216,7 @@ class Administracion_documentosController extends Administracion_mainController
 		$documento_solucion = $this->_getSanitizedParam("documento_solucion");
 		$documento_padre = $this->_getSanitizedParam("documento_padre");
 		$documento_producto = $this->_getSanitizedParam("documento_producto");
-
+error_reporting(E_ALL);
 		header('Location: ' . $this->route . '?documento_solucion=' . $documento_solucion . '&documento_padre=' . $documento_padre . '&documento_producto=' . $documento_producto . '');
 	}
 
