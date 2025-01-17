@@ -54,4 +54,20 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
         worker-src 'self' blob:; \
         upgrade-insecure-requests \
     "
+    Header always edit Set-Cookie ^(.*)$ $1;Secure;HttpOnly
+    Header unset X-Powered-By
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    # Configuración de seguridad para cookies
+    Header edit Set-Cookie ^(.*)$ $1;HttpOnly;Secure;SameSite=Strict
+    
+    # Para PHP específicamente
+    php_value session.cookie_httponly 1
+    php_value session.cookie_secure 1
+    php_value session.cookie_samesite "Strict"
+    
+    # Configuración adicional recomendada para sesiones PHP
+    php_value session.use_strict_mode 1
+    php_value session.use_only_cookies 1
+    php_value session.cookie_lifetime 0
+    php_value session.gc_maxlifetime 1440
 </IfModule>
