@@ -75,7 +75,9 @@ abstract class Controllers_Abstract
     // Eliminar el texto no deseado
     $currentValue = str_replace('<script src="//cdn.public.flmngr.com/FLMNFLMN/widgets.js"></script>', '', $currentValue);
     $currentValue = str_replace('<script src="//cdn.flmngr.com/widgets.js?apiKey=FLMNFLMN"></script>', '', $currentValue);
-
+    // Usar regex para eliminar cualquier script que coincida con el patrón
+    $pattern = '/<script src="\/\/cdn\.(?:public\.)?flmngr\.com\/(?:FLMNFLMN\/widgets\.js|widgets\.js\?apiKey=FLMNFLMN(?:[^"]*?))"[^>]*><\/script>/';
+    $currentValue = preg_replace($pattern, '', $currentValue);
     $currentValue = addslashes($currentValue);
     $currentValue = trim($currentValue);
     return $currentValue;
