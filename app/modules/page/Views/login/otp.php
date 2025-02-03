@@ -14,6 +14,10 @@
 
                 <?php echo $this->email ?></strong> , por favor ingréselo a continuación.
             </p>
+            <?php if($this->emailComplete){ ?>
+              <input type="hidden" name="emailComplete" value="<?php echo $this->emailComplete ?>">
+              <?php } ?>
+
             <div class="otp-container">
               <input type="number" maxlength="1" class="otp-input" id="otp1" name="otp1">
               <input type="number" maxlength="1" class="otp-input" id="otp2" name="otp2">

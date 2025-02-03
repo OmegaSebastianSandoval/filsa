@@ -1,6 +1,6 @@
 <h1 class="titulo-principal"><i class="fas fa-cogs"></i> <?php echo $this->titlesection; ?></h1>
 <div class="container-fluid">
-	<form class="text-left" enctype="multipart/form-data" method="post" action="<?php echo $this->routeform; ?>" data-toggle="validator">
+	<form class="text-left" enctype="multipart/form-data" method="post" action="<?php echo $this->routeform; ?>" id="form-users" data-toggle="validator">
 		<div class="content-dashboard">
 			<input type="hidden" name="csrf" id="csrf" value="<?php echo $this->csrf ?>">
 			<input type="hidden" name="csrf_section" id="csrf_section" value="<?php echo $this->csrf_section ?>">
@@ -18,8 +18,8 @@
 							<option value="">Seleccione...</option>
 							<?php foreach ($this->list_user_state as $key => $value) { ?>
 								<option <?php if ($this->getObjectVariable($this->content, "user_state") == $key) {
-											echo "selected";
-										} ?> value="<?php echo $key; ?>" /> <?= $value; ?></option>
+													echo "selected";
+												} ?> value="<?php echo $key; ?>" /> <?= $value; ?></option>
 							<?php } ?>
 						</select>
 					</label>
@@ -65,8 +65,8 @@
 							<option value="">Seleccione...</option>
 							<?php foreach ($this->list_user_nivel_cliente as $key => $value) { ?>
 								<option <?php if ($this->getObjectVariable($this->content, "user_nivel_cliente") == $key) {
-											echo "selected";
-										} ?> value="<?php echo $key; ?>" /> <?= $value; ?></option>
+													echo "selected";
+												} ?> value="<?php echo $key; ?>" /> <?= $value; ?></option>
 							<?php } ?>
 						</select>
 					</label>
@@ -227,7 +227,7 @@
 			</div>
 		</div>
 		<div class="botones-acciones">
-			<button class="btn btn-guardar" type="submit">Guardar</button>
+			<button class="btn btn-guardar" id="btn-form-users" type="submit">Guardar</button>
 			<a href="<?php echo $this->route; ?>" class="btn btn-cancelar">Cancelar</a>
 		</div>
 	</form>
@@ -270,6 +270,11 @@
 			}
 		}
 		document.getElementById('user_level').addEventListener('change', cambiarNivel);
+
+		document.getElementById('form-users').addEventListener('submit', function(event) {
+			const buttonUser = document.getElementById('btn-form-users');
+			buttonUser.disabled = true;
+		});
 	});
 
 	function soloNumeros(event) {

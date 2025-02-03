@@ -141,7 +141,10 @@
         </div>
         <div class="col-3">
           <div class="text-end"><a class="btn btn-sm btn-success" href="<?php echo $this->route . "\manage"; ?>"> <i
-                class="fas fa-plus-square"></i> Crear Nuevo</a></div>
+                class="fas fa-plus-square"></i> Crear Nuevo</a>
+
+            <a class="btn btn-sm btn-info" href="<?php echo $this->route . "/exportar"; ?>" target="_blank"> <i class="fa-solid fa-file-excel"></i> Descargar Excel</a>
+          </div>
         </div>
       </div>
     </div>
@@ -168,6 +171,9 @@
               <td><?= $content->user_user; ?></td>
               <td class="text-end">
                 <div>
+                  <?php if ($content->user_level == 2 && !$content->user_codigo_otp != 1) { ?><a class="btn btn-warning d-none btn-sm"
+                      href="<?php echo $this->route; ?>/registro?id=<?= $id ?>" data-bs-toggle="tooltip" data-placement="top"
+                      title="Enviar Mensaje"><i class="fas fa-pen-alt"></i></a><?php } ?>
                   <?php if ($_SESSION['kt_login_level'] == 1) { ?><a class="btn btn-azul btn-sm"
                       href="<?php echo $this->route; ?>/manage?id=<?= $id ?>" data-bs-toggle="tooltip" data-placement="top"
                       title="Editar"><i class="fas fa-pen-alt"></i></a><?php } ?>

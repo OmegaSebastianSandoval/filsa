@@ -236,7 +236,7 @@ class Page_loginController extends Page_mainController
   public function otpAction()
   {
     $email = base64_decode($this->_getSanitizedParam('e'));
-
+    $this->_view->emailComplete = $email;
     $this->_view->emailHidden = $this->_getSanitizedParam('e');
     //Ocultar caracteres de correo
     $email = explode('@', $email);
@@ -253,6 +253,20 @@ class Page_loginController extends Page_mainController
       $otp .= $this->_getSanitizedParam('otp' . $i);
     }
     $email = base64_decode($this->_getSanitizedParam('email'));
+    $emailComplete = $this->_getSanitizedParam('emailComplete');
+
+    //LOG
+    $data = [];
+    $data['log_tipo'] = "LOGIN";
+    $data['log_usuario'] = $emailComplete;
+    $info = [
+      'email' => $emailComplete,
+      'otp' => $otp,
+      'date' => date('Y-m-d H:i:s')
+    ];
+    $data['log_log'] = print_r($info, true);
+    $logModel = new Administracion_Model_DbTable_Log();
+    $logModel->insert($data);
 
     $dateFifteenMinutesAgo = date('Y-m-d H:i:s', strtotime('-15 minutes'));
     $otpModel = new Administracion_Model_DbTable_Otpcodes();
@@ -419,7 +433,7 @@ class Page_loginController extends Page_mainController
     Session::getInstance()->set("usuario", null);
     Session::getInstance()->set("usuario", []);
     session_destroy();
-   
+
     // Redirige a la página principal
     header('Location: /');
   }

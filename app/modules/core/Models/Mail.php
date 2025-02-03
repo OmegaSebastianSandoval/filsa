@@ -1,8 +1,8 @@
 <?php
 
 /**
-* Modelo del modulo Core que se encarga de inicializar  la clase de envio de correos
-*/
+ * Modelo del modulo Core que se encarga de inicializar  la clase de envio de correos
+ */
 class Core_Model_Mail
 {
     /**
@@ -16,9 +16,9 @@ class Core_Model_Mail
      */
     public function __construct()
     {
-        
+
         $informacionModel = new Page_Model_DbTable_Informacion();
-        $informacion = $informacionModel->getList("","orden ASC")[0];
+        $informacion = $informacionModel->getList("", "orden ASC")[0];
 
         $this->mail = new PHPMailer;
         $this->mail->CharSet = 'UTF-8';
@@ -28,11 +28,9 @@ class Core_Model_Mail
         $this->mail->Host = $informacion->info_pagina_host;
         $this->mail->Port = $informacion->info_pagina_port;
         $this->mail->SMTPAuth = true;
-        $this->mail->Username =$informacion->info_pagina_username;
-        $this->mail->Password =$informacion->info_pagina_password;
-        $this->mail->setFrom($informacion->info_pagina_correo_remitente,$informacion->info_pagina_nombre_remitente);
-
-
+        $this->mail->Username = $informacion->info_pagina_username;
+        $this->mail->Password = $informacion->info_pagina_password;
+        $this->mail->setFrom($informacion->info_pagina_correo_remitente, $informacion->info_pagina_nombre_remitente);
     }
     /**
      * retorna la  instancia de email

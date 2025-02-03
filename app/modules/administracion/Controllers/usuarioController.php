@@ -166,7 +166,15 @@ class Administracion_usuarioController extends Administracion_mainController
 	public function insertAction()
 	{
 		$this->setLayout('blanco');
+		ini_set('max_execution_time', 0);
+		ini_set('memory_limit', '2048M');
+		ini_set('post_max_size', '2048M');
+		ini_set('upload_max_filesize', '2048M');
+		ini_set('max_input_time', 0);
+		ini_set('max_input_vars', 3000);
 
+
+		error_log("Proceso iniciado: " . date('Y-m-d H:i:s'));
 		$csrf = $this->_getSanitizedParam("csrf");
 		if (Session::getInstance()->get('csrf')[$this->_getSanitizedParam("csrf_section")] == $csrf) {
 			$data = $this->getData();
@@ -180,7 +188,7 @@ class Administracion_usuarioController extends Administracion_mainController
 
 			$id = $this->mainModel->insert($data);
 
-			if ($id && $data["user_level"] == 2) {
+			/* 	if ($id && $data["user_level"] == 2) {
 				//Enviar correo registro y activo
 				// Crea una instancia del modelo de envío de correos y envía el correo de recuperación
 				$mailModel = new Core_Model_Sendingemail($this->_view);
@@ -196,7 +204,7 @@ class Administracion_usuarioController extends Administracion_mainController
 				$dataDireccion["direccion_estado"] = 1;
 				$direccionesModel = new Administracion_Model_DbTable_Direcciones();
 				//	$idDireccion = $direccionesModel->insert($dataDireccion);
-			}
+			} */
 
 
 			//LOG
@@ -206,6 +214,22 @@ class Administracion_usuarioController extends Administracion_mainController
 			$logModel->insert($data);
 		}
 		header('Location: ' . $this->route . '' . '');
+	}
+
+	public function registroAction()
+	{
+		$this->setLayout('blanco');
+		$id = $this->_getSanitizedParam("id");
+		$userModel = new Administracion_Model_DbTable_Usuario();
+		$objeto = $userModel->getById($id);
+		$data = (array) $objeto;
+		$mailModel = new Core_Model_Sendingemail($this->_view);
+		$mail = $mailModel->registro($data);
+		echo $mail;
+		if ($mail == 1) {
+			$userModel->editField($id, "user_codigo_otp", 1);
+		}
+		//header('Location: ' . $this->route . '' . '');
 	}
 
 	/**
@@ -262,6 +286,33 @@ class Administracion_usuarioController extends Administracion_mainController
 			}
 		}
 		header('Location: ' . $this->route . '' . '');
+	}
+	public function exportarAction()
+	{
+		//descargar excel de registros
+		$this->setLayout('blanco');
+
+		$this->filters();
+		$this->_view->list_user_nivel_cliente = $this->getNiveles();
+
+		$this->_view->departamentos = $this->getDirecciondepartamento();
+		
+		$this->_view->municipios = $this->getDireccionciudad();
+
+		$filters = (object)Session::getInstance()->get($this->namefilter);
+
+		$filters = $this->getFilter();
+		$order = "";
+		$list = $this->mainModel->getList($filters, $order);
+		$this->_view->lists = $list;
+
+		$filename = "usuarios_" . date("Y-m-d H:m:s") . ".xls";
+		$excel = $this->_getSanitizedParam("excel");
+		if ($excel == 1) {
+			header('Content-type: charset=UTF-8');
+			header("Content-Type: application/vnd.ms-excel;charset=UTF-8");
+			header("Content-Disposition: attachment; filename=\"$filename\";charset=UTF-8");
+		}
 	}
 
 	/**
@@ -355,7 +406,7 @@ class Administracion_usuarioController extends Administracion_mainController
 		$data = $modelData->getList();
 		$array = array();
 		foreach ($data as $key => $value) {
-			$array[$value->id_departamento] = mb_convert_encoding($value->departamento, 'ISO-8859-1', 'UTF-8');
+			$array[$value->id_departamento] = mb_convert_encoding($value->departamento, 'UTF8', 'ISO-8859-1');
 		}
 		return $array;
 	}
@@ -372,7 +423,7 @@ class Administracion_usuarioController extends Administracion_mainController
 		$data = $modelData->getList();
 		$array = array();
 		foreach ($data as $key => $value) {
-			$array[$value->id_municipio] =  mb_convert_encoding($value->municipio, 'ISO-8859-1', 'UTF-8');
+			$array[$value->id_municipio] =  mb_convert_encoding($value->municipio, 'UTF8', 'ISO-8859-1');
 		}
 		return $array;
 	}

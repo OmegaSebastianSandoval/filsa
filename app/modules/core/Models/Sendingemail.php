@@ -54,8 +54,8 @@ class Core_Model_Sendingemail
     $informacion = $infopageModel->getById(1);
     $correo = $informacion->info_pagina_correos_contacto;
 
-   
-    $this->email->getMail()->addBCC($correo,"Formulario de contacto Filsa Water");
+
+    $this->email->getMail()->addBCC($correo, "Formulario de contacto Filsa Water");
     $this->email->getMail()->addBCC("desarrollo8@omegawebsystems.com", "Formulario de contacto Filsa Water");
     $content = $this->_view->getRoutPHP('/../app/modules/core/Views/templatesemail/mailHome.php');
     $this->email->getMail()->Subject = 'Formulario de contacto Filsa Water';
@@ -101,7 +101,6 @@ class Core_Model_Sendingemail
 
 
 
-  /* No se usa */
   public function registro($data)
   {
     $this->_view->data = $data;
@@ -118,16 +117,16 @@ class Core_Model_Sendingemail
 
     $content = $this->_view->getRoutPHP('/../app/modules/core/Views/templatesemail/registro.php');
     $this->email->getMail()->Subject = 'Registro exitoso en FILSA WATER';
-
+    $this->email->getMail()->Timeout = 500;
 
     $this->email->getMail()->msgHTML($content);
     $this->email->getMail()->AltBody = $content;
     //$this->email->getMail()->addBCC($informacion->info_pagina_correo_oculto);
-    if ($this->email->sed() == true) {
-      return 1;
-    } else {
-      return 2;
-    }
+   if($this->email->sed()){
+    return 1;
+   }else{
+    return 'Error enviando correo: ' . $this->email->getMail()->ErrorInfo;
+   }
   }
 
 
