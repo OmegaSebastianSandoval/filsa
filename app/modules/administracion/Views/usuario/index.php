@@ -1,5 +1,5 @@
 <h1 class="titulo-principal"><i class="fas fa-cogs"></i> <?php echo $this->titlesection; ?></h1>
-<div class="container-fluid">
+<div class="container-fluid pb-5">
   <form action="<?php echo $this->route; ?>" method="post">
     <div class="content-dashboard">
       <div class="row">
@@ -140,11 +140,10 @@
           </select>
         </div>
         <div class="col-3">
-          <div class="text-end"><a class="btn btn-sm btn-success" href="<?php echo $this->route . "\manage"; ?>"> <i
-                class="fas fa-plus-square"></i> Crear Nuevo</a>
-
-            <a class="btn btn-sm btn-info" href="<?php echo $this->route . "/exportar"; ?>" target="_blank"> <i class="fa-solid fa-file-excel"></i> Descargar Excel</a>
-          </div>
+          <div class="text-end d-fex gap-1">
+              <a class="btn btn-sm btn-success" href="<?php echo $this->route . "\manage"; ?>"> <i class="fas fa-plus-square"></i> Crear Nuevo</a>
+              <a class="btn btn-sm btn-info" href="<?php echo $this->route . "/exportar?excel=1"; ?>" target="_blank"> <i class="fa-solid fa-file-excel"></i> Descargar Excel</a>
+        </div>
         </div>
       </div>
     </div>
@@ -156,8 +155,9 @@
             <td>Fecha de Creacion</td>
             <td>Nombres</td>
             <td>Nivel</td>
+            <td>Nivel - Cliente</td>
             <td>Usuario</td>
-            <td width="100"></td>
+            <td width="130"></td>
           </tr>
         </thead>
         <tbody>
@@ -168,12 +168,13 @@
               <td><?= $content->user_date; ?></td>
               <td><?= $content->user_names; ?></td>
               <td><?= $this->list_user_level[$content->user_level]; ?></td>
+               <td><?= $this->list_user_nivel_cliente[$content->user_nivel_cliente]; ?></td>
               <td><?= $content->user_user; ?></td>
               <td class="text-end">
                 <div>
-                  <?php if ($content->user_level == 2 && !$content->user_codigo_otp != 1) { ?><a class="btn btn-warning d-none btn-sm"
-                      href="<?php echo $this->route; ?>/registro?id=<?= $id ?>" data-bs-toggle="tooltip" data-placement="top"
-                      title="Enviar Mensaje"><i class="fas fa-pen-alt"></i></a><?php } ?>
+                    <?php if ($content->user_level == 2 && $content->user_codigo_otp!=1) { ?><a class="btn btn-warning btn-sm"
+                      href="<?php echo $this->route; ?>/registro?id=<?= $id ?>"  data-bs-toggle="tooltip" data-placement="top"
+                      title="Enviar Mensaje"><i class="fa-solid fa-envelope"></i></a><?php } ?>
                   <?php if ($_SESSION['kt_login_level'] == 1) { ?><a class="btn btn-azul btn-sm"
                       href="<?php echo $this->route; ?>/manage?id=<?= $id ?>" data-bs-toggle="tooltip" data-placement="top"
                       title="Editar"><i class="fas fa-pen-alt"></i></a><?php } ?>
@@ -192,7 +193,7 @@
 
                       </div>
                       <div class="modal-body">
-                        <div class="">¿Esta seguro de eliminar este registro?</div>
+                        <div class="">多Esta seguro de eliminar este registro?</div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

@@ -31,6 +31,7 @@ class Core_Model_Mail
         $this->mail->Username = $informacion->info_pagina_username;
         $this->mail->Password = $informacion->info_pagina_password;
         $this->mail->setFrom($informacion->info_pagina_correo_remitente, $informacion->info_pagina_nombre_remitente);
+        
     }
     /**
      * retorna la  instancia de email

@@ -2,15 +2,16 @@
 <table border="1" cellpadding="2">
     <thead>
         <tr>
-            <td>Fecha de Creación</td>
+            <td>Fecha de Creaci&oacute;n</td>
             <td>Nombre</td>
             <td>Nit</td>
             <td>Nivel</td>
+            <td>Nivel - Cliente</td>
             <td>Correo</td>
             <td>Telefono</td>
             <td>Departamento</td>
             <td>Municipio</td>
-            <td>Dirección</td>
+            <td>Direcci&oacute;n</td>
             <td>Nombre de contacto</td>
             <td>Telefono de contacto</td>
         </tr>
@@ -22,7 +23,8 @@
             <td><?= $content->user_date; ?></td>
             <td><?= $content->user_names; ?></td>
             <td><?= $content->user_cedula  ?></td>
-            <td><?= $this->list_user_nivel_cliente[$content->user_level]  ?></td>
+            <td><?= $this->list_user_level[$content->user_level]  ?></td>
+            <td><?= $this->list_user_nivel_cliente[$content->user_nivel_cliente]  ?></td>
             <td><?= $content->user_email   ?></td>
             <td><?= $content->user_telefono  ?></td>
             <td><?= $this->departamentos[$content->user_departamento] ?></td>

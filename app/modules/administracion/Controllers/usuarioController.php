@@ -73,7 +73,10 @@ class Administracion_usuarioController extends Administracion_mainController
 	 */
 	public function indexAction()
 	{
-		$title = "Administración de Usuarios";
+		if ($_GET["prueba"] == 1) {
+			phpinfo();
+		}
+		$title = "Administraci贸n de Usuarios";
 		$this->getLayout()->setTitle($title);
 		$this->_view->titlesection = $title;
 		$this->filters();
@@ -127,12 +130,12 @@ class Administracion_usuarioController extends Administracion_mainController
 
 		$departamentos = $departamentosModel->getList("", " departamento ASC");
 		foreach ($departamentos as $value) {
-			$value->departamento = mb_convert_encoding($value->departamento, 'ISO-8859-1', 'UTF-8');
+			$value->departamento = mb_convert_encoding($value->departamento, 'UTF-8', 'ISO-8859-1');
 		}
 		$this->_view->departamentos = $departamentos;
 		$municipios = $municipiosModel->getList("", "municipio ASC");
 		foreach ($municipios as $value) {
-			$value->municipio = mb_convert_encoding($value->municipio, 'ISO-8859-1', 'UTF-8');
+			$value->municipio =  mb_convert_encoding($value->municipio, 'UTF-8', 'ISO-8859-1');
 		}
 		$this->_view->municipios = $municipios;
 		$id = $this->_getSanitizedParam("id");
@@ -166,15 +169,9 @@ class Administracion_usuarioController extends Administracion_mainController
 	public function insertAction()
 	{
 		$this->setLayout('blanco');
+		set_time_limit(0);
 		ini_set('max_execution_time', 0);
-		ini_set('memory_limit', '2048M');
-		ini_set('post_max_size', '2048M');
-		ini_set('upload_max_filesize', '2048M');
-		ini_set('max_input_time', 0);
-		ini_set('max_input_vars', 3000);
 
-
-		error_log("Proceso iniciado: " . date('Y-m-d H:i:s'));
 		$csrf = $this->_getSanitizedParam("csrf");
 		if (Session::getInstance()->get('csrf')[$this->_getSanitizedParam("csrf_section")] == $csrf) {
 			$data = $this->getData();
@@ -188,9 +185,9 @@ class Administracion_usuarioController extends Administracion_mainController
 
 			$id = $this->mainModel->insert($data);
 
-			/* 	if ($id && $data["user_level"] == 2) {
+			/*	if ($id && $data["user_level"] == 2) {
 				//Enviar correo registro y activo
-				// Crea una instancia del modelo de envío de correos y envía el correo de recuperación
+				// Crea una instancia del modelo de env铆o de correos y env铆a el correo de recuperaci贸n
 				$mailModel = new Core_Model_Sendingemail($this->_view);
 				$mail = $mailModel->registro($data);
 			}
@@ -204,7 +201,7 @@ class Administracion_usuarioController extends Administracion_mainController
 				$dataDireccion["direccion_estado"] = 1;
 				$direccionesModel = new Administracion_Model_DbTable_Direcciones();
 				//	$idDireccion = $direccionesModel->insert($dataDireccion);
-			} */
+			}*/
 
 
 			//LOG
@@ -218,6 +215,12 @@ class Administracion_usuarioController extends Administracion_mainController
 
 	public function registroAction()
 	{
+
+
+		ini_set('max_execution_time', 0);
+		ini_set('memory_limit', '-1');
+		set_time_limit(500);
+
 		$this->setLayout('blanco');
 		$id = $this->_getSanitizedParam("id");
 		$userModel = new Administracion_Model_DbTable_Usuario();
@@ -225,12 +228,13 @@ class Administracion_usuarioController extends Administracion_mainController
 		$data = (array) $objeto;
 		$mailModel = new Core_Model_Sendingemail($this->_view);
 		$mail = $mailModel->registro($data);
-		echo $mail;
 		if ($mail == 1) {
 			$userModel->editField($id, "user_codigo_otp", 1);
 		}
-		//header('Location: ' . $this->route . '' . '');
+
+		header('Location: ' . $this->route . '' . '');
 	}
+
 
 	/**
 	 * Recibe un identificador  y Actualiza la informacion de un Usuario  y redirecciona al listado de Usuarios.
@@ -246,7 +250,7 @@ class Administracion_usuarioController extends Administracion_mainController
 			$content = $this->mainModel->getById($id);
 			if ($content->user_id) {
 				$data = $this->getData();
-				print_r($data);
+
 				$this->mainModel->update($data, $id);
 
 				//LOG
@@ -287,6 +291,7 @@ class Administracion_usuarioController extends Administracion_mainController
 		}
 		header('Location: ' . $this->route . '' . '');
 	}
+
 	public function exportarAction()
 	{
 		//descargar excel de registros
@@ -294,9 +299,10 @@ class Administracion_usuarioController extends Administracion_mainController
 
 		$this->filters();
 		$this->_view->list_user_nivel_cliente = $this->getNiveles();
+		$this->_view->list_user_level = $this->getUserlevel();
 
 		$this->_view->departamentos = $this->getDirecciondepartamento();
-		
+
 		$this->_view->municipios = $this->getDireccionciudad();
 
 		$filters = (object)Session::getInstance()->get($this->namefilter);
@@ -314,6 +320,7 @@ class Administracion_usuarioController extends Administracion_mainController
 			header("Content-Disposition: attachment; filename=\"$filename\";charset=UTF-8");
 		}
 	}
+
 
 	/**
 	 * Recibe la informacion del formulario y la retorna en forma de array para la edicion y creacion de Usuario.
