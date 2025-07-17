@@ -735,3 +735,39 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  function cambiarIdioma(idioma) {
+    var route = $("#route").val();
+
+    console.log(route, idioma);
+    $.post(
+      route,
+      {
+        idioma: idioma,
+      },
+      function () {
+        location.reload();
+      }
+    );
+  }
+
+  document.querySelector(".be")?.addEventListener("click", () => {
+    cambiarIdioma("english");
+  });
+
+
+  document.querySelector(".bc")?.addEventListener("click", () => {
+    cambiarIdioma("spanish");
+  });
+
+  document.querySelector(".ber")?.addEventListener("click", () => {
+    cambiarIdioma("english");
+  });
+
+
+  document.querySelector(".bcr")?.addEventListener("click", () => {
+    cambiarIdioma("spanish");
+  });
+})

@@ -14,7 +14,7 @@
 <div class="contenido-home ">
     <?php echo $this->contenido ?>
 
-   <!--  <section id="secton-blogs" class="contenedor-seccion section-blogs bg-gray">
+    <!--  <section id="secton-blogs" class="contenedor-seccion section-blogs bg-gray">
         <div class="container">
             <h2 class="text-center">Conoce nuestras soluciones</h2>
             <div id="slider_blogs" class="slider_blogs pt-1 pt-md-1">
@@ -62,7 +62,7 @@
                                     class="img-fluid">
 
                             </div>
-                           
+
                             <div class="content-title">
                                 <h4><?= $solucion->solucion_titulo ?></h4>
                             </div>
@@ -85,9 +85,6 @@
 </div>
 
 <script>
-
-   
-
     $('#slider_blogs').slick({
         infinity: false,
         slidesToShow: 3,

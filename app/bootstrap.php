@@ -11,6 +11,7 @@ define('FILE_PATH', APP_PATH . "../public_html/files/");
 define('PUBLIC_PATH', APP_PATH . "../public_html/");
 
 define('RUTA', "http://192.168.150.4:8043");
+define('RUTA', "http://192.168.150.4:8043");
 /* define('RUTA', "https://www.filsawater.com"); */
 
 
@@ -74,6 +75,14 @@ if (!file_exists(IMAGE_PATH)) {
 
 if (!file_exists(FILE_PATH)) {
   mkdir(FILE_PATH, 0777, true);
+}
+if (isset($_GET['lang'])) {
+  $lang = $_GET['lang'];
+
+  // Verificar que el idioma existe en la carpeta "lang"
+  if (file_exists(__DIR__ . "/lang/{$lang}.php")) {
+      $_SESSION['lang'] = $lang;
+  }
 }
 
 // require_once '../vendor/phpoffice/phpexcel/Classes/PHPExcel.php';

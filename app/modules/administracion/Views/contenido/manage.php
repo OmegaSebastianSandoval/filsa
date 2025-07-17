@@ -395,7 +395,7 @@
           </label>
           <div class="help-block with-errors"></div>
         </div>
-       
+
         <div class="col-12 form-group no-banner no-carrousel no-seccion no-acordion si-contenido"
           <?php if ($tipo != 3 && $tipo != 10) { ?> style="display: none;" <?php } ?>>
           <label for="contenido_introduccion" class="form-label">Introducci&oacute;n</label>

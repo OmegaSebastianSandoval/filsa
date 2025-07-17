@@ -8,10 +8,6 @@ composer.lock
 Gruntfile.js
 package-lock.json
 package.json
-public/images/
-public/assets/
-public/files/
-public/scripts/
 public/public.zip/
-app/config/
+
 

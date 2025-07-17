@@ -9,6 +9,11 @@ class Page_mainController extends Controllers_Abstract
 
 	public $template;
 
+
+	public $nameidioma;
+
+	public $idioma;
+
 	public function init()
 	{
 		$this->setLayout('page_page');
@@ -36,6 +41,17 @@ class Page_mainController extends Controllers_Abstract
 		$this->_view->botonesFlotantes = $publicidadModel->getList("publicidad_seccion='100' AND publicidad_estado='1'", "orden ASC");
 
 		$this->_view->carrito = $this->_view->getRoutPHP('modules/page/Views/carrito/index.php');
+
+		$this->nameidioma = "pages_idioma";
+		
+
+		if (Session::getInstance()->get($this->nameidioma)) {
+			$this->idioma = Session::getInstance()->get($this->nameidioma);
+		} else {
+			$this->idioma = 'spanish';
+		}
+		$this->_view->idioma = $this->idioma;
+		$this->getLayout()->setIdioma($this->idioma);
 
 		// $this->getcartlist();
 		$this->getLayout()->setData("meta_description", "$informacion->info_pagina_descripcion");
@@ -323,5 +339,9 @@ class Page_mainController extends Controllers_Abstract
 			$carrito[$id] = $cantidad;
 		}
 		Session::getInstance()->set("carrito", $carrito);
+	}
+	public function changeidiomaAction()
+	{
+		Session::getInstance()->set($this->nameidioma, $this->_getSanitizedParam("idioma"));
 	}
 }

@@ -5,6 +5,7 @@ class Layout
     protected $_view;
     protected $_layoutFilename;
     protected $_content = '';
+    protected $_idioma = 'spanish';
     protected $_titlepage = DEFAULT_TITLE;
     protected $_data =array();
 
@@ -25,7 +26,9 @@ class Layout
     public function setData($name,$data){
         $this->_data[$name]= $data;
     }
-
+    public function setIdioma($idioma){
+        $this->_idioma =  $idioma;
+    }
     public function render($viewFilename)
     {
         ob_start();

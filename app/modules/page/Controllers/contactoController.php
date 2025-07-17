@@ -8,7 +8,7 @@ class Page_contactoController extends Page_mainController
   public function init()
   {
 
-
+// error_reporting(E_ALL);
     // Inicia la sesión si no está ya iniciada
     if (session_status() == PHP_SESSION_NONE) {
       session_start();

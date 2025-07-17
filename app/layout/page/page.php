@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="<?php echo $this->_idioma == 'english' ? 'en' : 'es' ?>">
 
 <head>
-  <meta charset="UTF-8">
-
+  <?php if ($this->_idioma != 'english') { ?>
+    <meta charset="UTF-8">
+  <?php } ?>
   <title><?= $this->_titlepage ?></title>
   <?php $infopageModel = new Page_Model_DbTable_Informacion();
   $infopage = $infopageModel->getById(1);
@@ -115,12 +116,41 @@
       map.setCenter(new google.maps.LatLng(longitude, latitude));
     }
   </script>
+
 </head>
 
 <body>
 
+
+  <?php if ($this->_idioma == 'english') { ?>
+    <script>
+      // console.log("<?php echo $this->_idioma ?>")
+    </script>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'es',
+          includedLanguages: 'en,pt'
+        }, 'google_translate_element');
+        setTimeout(function() {
+          changeLanguage('en');
+        }, 1000);
+      }
+
+      function changeLanguage(language) {
+        var selectElement = document.querySelector('.goog-te-combo');
+        selectElement.value = language;
+        selectElement.dispatchEvent(new Event('change'));
+      }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <?php }  ?>
+
   <?= $this->_data['carrito']; ?>
 
+  <div id="google_translate_element" class="d-none"></div>
 
   <header>
     <?= $this->_data['header']; ?>
@@ -130,6 +160,8 @@
     <?= $this->_data['footer']; ?>
   </footer>
   <?= $this->_data['adicionales']; ?>
+
+
 
 </body>
 

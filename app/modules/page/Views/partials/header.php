@@ -1,4 +1,7 @@
 <section class="header-up py-2">
+    <input type="hidden" value="/page/index/changeidioma" id="route">
+
+
     <div class="container">
         <div class="d-none d-md-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center gap-3 ">
@@ -88,19 +91,25 @@
                             Login
                         </a>
                     <?php } ?>
-               
-                        <div class="vr"></div>
 
-                        <span class="content-carrito  d-none d-md-block" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            <span id="count-carrito"></span>
-                        </span>
-                        <?php if ($this->usuario) { ?>
+                    <div class="vr"></div>
+
+                    <span class="content-carrito  d-none d-md-block" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span id="count-carrito"></span>
+                    </span>
+                    <?php if ($this->usuario) { ?>
                         <div class="vr ocultar-carrito"></div>
                         <a href="/page/login/logout" class="login-out">
                             <i class="fa-solid fa-right-from-bracket"></i>
                             Salir
                         </a>
+                    <?php } ?>
+                    <div class="vr"></div>
+                    <?php if ($this->idioma == 'spanish') { ?>
+                        <img src="/skins/page/images/be.png" class="flag img-fluid rounded be d-none d-md-block" alt="Bandera de Estados Unidos" title="Translate to english">
+                    <?php } else { ?>
+                        <img src="/skins/page/images/bc.jpg" class="flag img-fluid rounded bc  d-none d-md-block" alt="Bandera de Colombia" title="Traducir a español">
                     <?php } ?>
 
 
@@ -111,6 +120,7 @@
 
         </div>
     </div>
+
 </section>
 <section class="header-down py-4">
 
@@ -263,12 +273,18 @@
 
                 </div>
             </ul>
-       
-                <span class="content-carrito d-block d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span id="count-carrito-responsive"></span>
-                </span>
-          
+                <?php if ($this->idioma == 'spanish') { ?>
+                    <img src="/skins/page/images/be.png" class="flag img-fluid rounded ber d-block d-md-none" alt="Bandera de Estados Unidos" title="Translate to english">
+                <?php } else { ?>
+                    <img src="/skins/page/images/bc.jpg" class="flag img-fluid  d-block d-md-none rounded bcr" alt="Bandera de Colombia" title="Traducir a español">
+                <?php } ?>
+
+
+            <span class="content-carrito d-block d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="count-carrito-responsive"></span>
+            </span>
+
             <label for="nav-toggle" class="icon-burger">
                 <div class="line"></div>
                 <div class="line"></div>
